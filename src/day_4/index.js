@@ -10,7 +10,7 @@ outOfBoundsCheck = (i, j, di, dj) =>
 
 function findXMASs(matrix, i, j) {
   let XMASs = 0;
-  for (let di of [-1, 0, 1]) {
+  for (let di of [-1, 0, 1])
     for (let dj of [-1, 0, 1]) {
       if (
         !(di === 0 && dj === 0) &&
@@ -24,7 +24,6 @@ function findXMASs(matrix, i, j) {
         XMASs++;
       }
     }
-  }
   return XMASs;
 }
 
