@@ -2,39 +2,27 @@ const { inputToArray } = require("../../utils");
 const lines = inputToArray(`${__dirname}/input.txt`);
 let matrix = lines.map((line) => line.split(""));
 
-let validDirections = [
-  [-1, 0],
-  [-1, 1],
-  [0, 1],
-  [1, 1],
-  [1, 0],
-  [1, -1],
-  [0, -1],
-  [-1, -1]
-];
-
-
-function checkWordIsInRange(i, j, di, dj) {
-  return !(
-    i + 3 * di < 0 ||
-    i + 3 * di > lines.length - 1 ||
-    j + 3 * dj < 0 ||
-    j + 3 * dj > lines.length - 1
-  );
-}
+outOfBoundsCheck = (i, j, di, dj) =>
+  i + 3 * di < 0 ||
+  i + 3 * di > lines.length - 1 ||
+  j + 3 * dj < 0 ||
+  j + 3 * dj > lines.length - 1;
 
 function findXMASs(matrix, i, j) {
   let XMASs = 0;
-  for (let [di, dj] of validDirections) {
-    if (
-      checkWordIsInRange(i, j, di, dj) &&
-      matrix[i][j] +
-        matrix[i + di][j + dj] +
-        matrix[i + 2 * di][j + 2 * dj] +
-        matrix[i + 3 * di][j + 3 * dj] ===
-        "XMAS"
-    ) {
-      XMASs++;
+  for (let di of [-1, 0, 1]) {
+    for (let dj of [-1, 0, 1]) {
+      if (
+        !(di === 0 && dj === 0) &&
+        !outOfBoundsCheck(i, j, di, dj) &&
+        matrix[i][j] +
+          matrix[i + di][j + dj] +
+          matrix[i + 2 * di][j + 2 * dj] +
+          matrix[i + 3 * di][j + 3 * dj] ===
+          "XMAS"
+      ) {
+        XMASs++;
+      }
     }
   }
   return XMASs;
